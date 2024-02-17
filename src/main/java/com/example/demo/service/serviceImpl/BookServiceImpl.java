@@ -54,9 +54,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Integer delete(Integer id) {
-
-        Integer count = bookMapper.delete(id);
-        return count;
+        return bookMapper.delete(id);
     }
 
     @Override
@@ -69,7 +67,6 @@ public class BookServiceImpl implements BookService {
             BeanUtil.beanCopy(beanMap, bookDto);
         }
         Optional<BookDto> res = Optional.of(bookDto);
-
         return res;
     }
 

@@ -7,13 +7,11 @@ public class BookEo {
 
     private Integer id;
 
-    private String title;
+    private String isbn;
+
+    private String bookName;
 
     private String author;
 
-    private Integer publishTime;
-
-    private String bookNum;
-
-    private String desc;
+    private String publishDate;
 }

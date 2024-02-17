@@ -7,13 +7,12 @@ public class BookDto {
 
     private Integer id;
 
-    private String title;
+    private String isbn;
+
+    private String bookName;
 
     private String author;
 
-    private Integer publishTime;
+    private String publishDate;
 
-    private String bookNum;
-
-    private String desc;
 }

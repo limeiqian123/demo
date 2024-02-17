@@ -5,39 +5,37 @@
 
 <mapper namespace="com.example.demo.mapper.BookMapper">
     <insert id="saveOne" parameterType="com.example.demo.eo.BookEo" useGeneratedKeys="true" keyProperty="id">
-        insert into book(`title`,`author`,`publish_time`,`book_num`,`desc`) values(#{title},#{author},#{publishTime},#{bookNum},#{desc});
+        insert into books(`isbn`,`book_name`,`author`,`publish_date`) values(#{isbn},#{bookName},#{author},#{publishDate});
     </insert>
 
     <select id="queryById" parameterType="Integer" resultType="com.example.demo.eo.BookEo">
-        select `id`, `title`,`author`,`publish_time`,`book_num`,`desc` from book where id = #{id}
+        select `id`, `isbn`,`book_name` bookName,`author`,`publish_date` publishDate from books where id = #{id}
     </select>
 
     <select id="listAll" resultType="com.example.demo.eo.BookEo">
-        select `id`, `title`,`author`,`publish_time`,`book_num`,`desc` from book
+        select `id`, `isbn`,`book_name` bookName,`author`,`publish_date` publishDate from books
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer" >
-        delete from book where id = #{id}
+        delete from books where id = #{id}
     </delete>
 
     <update id="update" parameterType="com.example.demo.dto.BookDto"  >
-        update book
+        update books
         <set>
-            <if test="title != null and title != ''">
-              `title` = #{title},
+            <if test="isbn != null and isbn != ''">
+                `isbn` = #{isbn},
+            </if>
+            <if test="bookName != null and bookName != ''">
+              `book_name` = #{bookName},
             </if>
             <if test="author != null and author != ''">
               `author` = #{author},
             </if>
-            <if test="publishTime != null">
-              `publish_time` = #{publishTime},
+            <if test="publishDate != null">
+              `publish_date` = #{publishDate},
             </if>
-            <if test="bookNum != null and bookNum != ''">
-              `book_num`` = #{bookNum},
-            </if>
-            <if test="desc != null and desc != ''">
-              `desc` = #{desc},
-            </if>
+
         </set>
         where id = #{id}
     </update>

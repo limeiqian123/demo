@@ -7,6 +7,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -21,25 +25,24 @@ public class BookMapperTest {
     @Test
     public void testBookAdd() {
         BookEo bookEo = new BookEo();
-        bookEo.setTitle("本草纲目");
-        bookEo.setAuthor("李时珍");
-        bookEo.setPublishTime(2020);
-        bookEo.setBookNum("324-df-32324");
-        bookEo.setDesc("medical book");
+        bookEo.setIsbn("9787011234561");
+        bookEo.setBookName("A Little Prince");
+        bookEo.setAuthor("Joke");
+        bookEo.setPublishDate("1993-01-23");
 
         bookMapper.saveOne(bookEo);
 
         assertNotNull(bookEo.getId());
-        assertEquals("本草纲目", bookEo.getTitle());
+        assertEquals("A Little Prince", bookEo.getBookName());
 
     }
 
     @Test
     public void testQueryById() {
 
-        BookEo bookEo = bookMapper.queryById(2);
+        BookEo bookEo = bookMapper.queryById(3);
 
-        assertEquals("本草纲目", bookEo.getTitle());
+        assertEquals("A Little Prince", bookEo.getBookName());
 
     }
 
@@ -48,18 +51,17 @@ public class BookMapperTest {
 
         List<BookEo> bookEos = bookMapper.listAll();
 
-        assertEquals("本草纲目", bookEos.get(1).getTitle());
+        assertEquals("A Little Prince", bookEos.get(2).getBookName());
     }
 
     @Test
     public void testDelete() {
 
         BookEo bookEo = new BookEo();
-        bookEo.setTitle("本草纲目");
-        bookEo.setAuthor("李时珍");
-        bookEo.setPublishTime(2020);
-        bookEo.setBookNum("324-df-32324");
-        bookEo.setDesc("medical book");
+        bookEo.setIsbn("9787011234662");
+        bookEo.setBookName("A Prince");
+        bookEo.setAuthor("Joker");
+        bookEo.setPublishDate("1993-03-23");
 
         bookMapper.saveOne(bookEo);
 
@@ -72,11 +74,11 @@ public class BookMapperTest {
     public void testUpdate(){
 
         BookEo bookEo = new BookEo();
-        Integer randomPublishTime = Math.abs(new Random().nextInt() % 2024);
         bookEo.setId(1);
-        bookEo.setTitle("狂人日记");
-        bookEo.setAuthor("鲁迅");
-        bookEo.setPublishTime(randomPublishTime);
+        bookEo.setIsbn("9787011234662");
+        bookEo.setBookName("Bleak House");
+        bookEo.setAuthor("Toms");
+        bookEo.setPublishDate("1924-01-01");
 
         BookDto bookDto = new BookDto();
         BeanUtils.copyProperties(bookEo,bookDto);

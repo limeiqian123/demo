@@ -36,11 +36,10 @@ public class BookControllerTest {
     @Test
     public void testBookAdd() throws Exception {
         BookDto bookDto = new BookDto();
-        bookDto.setTitle("本草纲目");
-        bookDto.setAuthor("李时珍");
-        bookDto.setPublishTime(2020);
-        bookDto.setBookNum("324-df-32324");
-        bookDto.setDesc("medical book");
+        bookDto.setIsbn("9787011234682");
+        bookDto.setBookName("Mr. Bean");
+        bookDto.setAuthor("Mr. L");
+        bookDto.setPublishDate("1888-11-01");
         Optional<BookDto> mockBookDto = Optional.of(bookDto);
 
         Mockito.when(bookService.add(Mockito.any(BookDto.class))).thenReturn(mockBookDto);
@@ -48,14 +47,13 @@ public class BookControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(post("/book/add")
                         .param("id", "1")
-                        .param("title", "本草纲目")
-                        .param("author", "李时珍")
-                        .param("publishTime", "2023")
-                        .param("bookNum", "324-df-32324")
-                        .param("desc", "medical book")
+                        .param("isbn", "9787011234682")
+                        .param("bookName", "Mr. Bean")
+                        .param("author", "Mr. L")
+                        .param("publishDate", "1888-11-01")
                 ).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.title").value("本草纲目"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.bookName").value("Mr. Bean"))
                 .andReturn();
         ;
     }
@@ -64,11 +62,10 @@ public class BookControllerTest {
     public void testBookQuery() throws Exception {
 
         BookDto bookDto = new BookDto();
-        bookDto.setTitle("本草纲目");
-        bookDto.setAuthor("李时珍");
-        bookDto.setPublishTime(2020);
-        bookDto.setBookNum("324-df-32324");
-        bookDto.setDesc("medical book");
+        bookDto.setIsbn("9787011234682");
+        bookDto.setBookName("Mr. Bean");
+        bookDto.setAuthor("Mr. L");
+        bookDto.setPublishDate("1888-11-01");
         Optional<BookDto> mockBookDto = Optional.of(bookDto);
 
         Mockito.when(bookService.query(1)).thenReturn(mockBookDto);
@@ -79,20 +76,18 @@ public class BookControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.title").value("本草纲目"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.bookName").value("Mr. Bean"));
     }
 
     @Test
     public void testBookList() throws Exception {
-
         BookDto bookDto = new BookDto();
-        bookDto.setTitle("本草纲目");
-        bookDto.setAuthor("李时珍");
-        bookDto.setPublishTime(2020);
-        bookDto.setBookNum("324-df-32324");
-        bookDto.setDesc("medical book");
+        bookDto.setIsbn("9787011234682");
+        bookDto.setBookName("Mr. Bean");
+        bookDto.setAuthor("Mr. L");
+        bookDto.setPublishDate("1888-11-01");
 
-        List<BookDto> bookDtos = new ArrayList();
+        List<BookDto> bookDtos = new ArrayList<>();
         bookDtos.add(bookDto);
 
         Optional<List<BookDto>> bookDtoList = Optional.of(bookDtos);
@@ -104,12 +99,11 @@ public class BookControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].title").value("本草纲目"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].bookName").value("Mr. Bean"));
     }
 
     @Test
     public void testBookDelete() throws Exception {
-
         Mockito.when(bookService.delete(Mockito.anyInt())).thenReturn(1);
         mockMvc.perform(delete("/book/delete")
                         .param("id", "1")
@@ -122,13 +116,10 @@ public class BookControllerTest {
 
     @Test
     public void testBookUpdate() throws Exception {
-
         BookDto bookDto = new BookDto();
-        Integer randomPublishTime = Math.abs(new Random().nextInt() % 2024);
         bookDto.setId(1);
-        bookDto.setTitle("狂人日记");
-        bookDto.setAuthor("鲁迅");
-        bookDto.setPublishTime(randomPublishTime);
+        bookDto.setBookName("Mrs. Bean");
+        bookDto.setAuthor("Mrs. B");
 
         BookDto bookReturn = new BookDto();
         BeanUtils.copyProperties(bookDto, bookReturn);
@@ -139,14 +130,13 @@ public class BookControllerTest {
 
         mockMvc.perform(put("/book/update")
                         .param("id", "1")
-                        .param("title", "狂人日记")
-                        .param("publishTime", randomPublishTime.toString())
-                        .param("author","鲁迅")
+                        .param("bookName", "Mrs. Bean")
+                        .param("author","Mrs. B")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.publishTime").value(randomPublishTime));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.author").value("Mrs. B"));
 
     }
 }

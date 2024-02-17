@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cglib.beans.BeanMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,51 +31,47 @@ public class BookServiceTest {
     public void testBookAdd() {
         BookEo bookReturn = new BookEo();
         bookReturn.setId(1);
-        bookReturn.setTitle("本草纲目");
-        bookReturn.setAuthor("李时珍");
-        bookReturn.setPublishTime(2020);
-        bookReturn.setBookNum("324-df-32324");
-        bookReturn.setDesc("medical book");
+        bookReturn.setIsbn("9787011334567");
+        bookReturn.setBookName("Mr. Bean");
+        bookReturn.setAuthor("Mr. White");
+        bookReturn.setPublishDate("1922-01-22");
 
         Mockito.when(bookMapper.saveOne(Mockito.any(BookEo.class))).thenReturn(1);
 
         BookDto bookInput = new BookDto();
-        bookInput.setTitle("本草纲目");
-        bookInput.setAuthor("李时珍");
-        bookInput.setPublishTime(2020);
-        bookInput.setBookNum("324-df-32324");
-        bookInput.setDesc("medical book");
+        bookInput.setIsbn("9787011334567");
+        bookInput.setBookName("Mr. Bean");
+        bookInput.setAuthor("Mr. White");
+        bookInput.setPublishDate("1922-01-22");
 
         Optional<BookDto> result = bookService.add(bookInput);
 
-        assertEquals(result.get().getPublishTime(),2020);
+        assertEquals(result.get().getIsbn(),bookInput.getIsbn());
     }
 
     @Test
     public void testBookQuery() {
         BookEo bookReturn = new BookEo();
         bookReturn.setId(1);
-        bookReturn.setTitle("本草纲目");
-        bookReturn.setAuthor("李时珍");
-        bookReturn.setPublishTime(2020);
-        bookReturn.setBookNum("324-df-32324");
-        bookReturn.setDesc("medical book");
+        bookReturn.setIsbn("9787011334567");
+        bookReturn.setBookName("Mr. Bean");
+        bookReturn.setAuthor("Mr. White");
+        bookReturn.setPublishDate("1922-01-22");
 
         Mockito.when(bookMapper.queryById(Mockito.anyInt())).thenReturn(bookReturn);
 
         Optional<BookDto> result = bookService.query(1);
-        assertEquals("本草纲目", result.get().getTitle());
+        assertEquals("Mr. Bean", result.get().getBookName());
     }
 
     @Test
     public void testBookListAll() {
         BookEo bookReturn = new BookEo();
         bookReturn.setId(1);
-        bookReturn.setTitle("本草纲目");
-        bookReturn.setAuthor("李时珍");
-        bookReturn.setPublishTime(2020);
-        bookReturn.setBookNum("324-df-32324");
-        bookReturn.setDesc("medical book");
+        bookReturn.setIsbn("9787011334567");
+        bookReturn.setBookName("Mr. Bean");
+        bookReturn.setAuthor("Mr. White");
+        bookReturn.setPublishDate("1922-01-22");
 
         List<BookEo> bookEoList = new ArrayList<>();
         bookEoList.add(bookReturn);
@@ -87,40 +84,35 @@ public class BookServiceTest {
 
     @Test
     public void testDelete() {
-
         Mockito.when(bookMapper.delete(Mockito.anyInt())).thenReturn(1);
         assertEquals(1,bookService.delete(1));
-
     }
 
     @Test
     public void testUpdate(){
         BookDto bookDto = new BookDto();
-        Integer randomPublishTime = Math.abs(new Random().nextInt() % 2024);
         bookDto.setId(1);
-        bookDto.setTitle("狂人日记");
-        bookDto.setAuthor("鲁迅");
-        bookDto.setPublishTime(randomPublishTime);
+        bookDto.setBookName("Mrs. J");
+        bookDto.setAuthor("Mrs. B");
 
         BookEo bookReturn = new BookEo();
         bookReturn.setId(1);
-        bookReturn.setTitle("本草纲目");
-        bookReturn.setAuthor("李时珍");
-        bookReturn.setPublishTime(2020);
-        bookReturn.setBookNum("324-df-32324");
-        bookReturn.setDesc("medical book");
+        bookReturn.setIsbn("9787011334567");
+        bookReturn.setBookName("Mr. Bean");
+        bookReturn.setAuthor("Mr. White");
+        bookReturn.setPublishDate("1922-01-22");
+
 
         Mockito.when(bookMapper.update(bookDto)).thenReturn(1);
         Mockito.when(bookMapper.queryById(1)).thenReturn(bookReturn);
 
         Optional<BookDto> update = bookService.update(bookDto);
 
-        BookDto uodatedBookDto = update.get();
-        assertEquals(uodatedBookDto.getId(),1);
-        assertEquals(uodatedBookDto.getTitle(),"狂人日记");
-        assertEquals(uodatedBookDto.getAuthor(),"鲁迅");
-        assertEquals(uodatedBookDto.getPublishTime(),randomPublishTime);
-
+        BookDto updatedBookDto = update.get();
+        assertEquals(updatedBookDto.getId(),1);
+        assertEquals(updatedBookDto.getBookName(), "Mrs. J");
+        assertEquals(updatedBookDto.getAuthor(),"Mrs. B");
+        assertEquals(updatedBookDto.getPublishDate(), "1922-01-22");
     }
 
 }
