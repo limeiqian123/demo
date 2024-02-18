@@ -28,7 +28,7 @@ public class BookMapperTest {
         bookEo.setIsbn("9787011234561");
         bookEo.setBookName("A Little Prince");
         bookEo.setAuthor("Joke");
-        bookEo.setPublishDate("1993-01-23");
+        bookEo.setPublishTime(1993);
 
         bookMapper.saveOne(bookEo);
 
@@ -42,7 +42,7 @@ public class BookMapperTest {
 
         BookEo bookEo = bookMapper.queryById(3);
 
-        assertEquals("A Little Prince", bookEo.getBookName());
+        assertEquals("Mr. Bean", bookEo.getBookName());
 
     }
 
@@ -51,7 +51,7 @@ public class BookMapperTest {
 
         List<BookEo> bookEos = bookMapper.listAll();
 
-        assertEquals("A Little Prince", bookEos.get(2).getBookName());
+        assertEquals("Mr. Bean", bookEos.get(1).getBookName());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BookMapperTest {
         bookEo.setIsbn("9787011234662");
         bookEo.setBookName("A Prince");
         bookEo.setAuthor("Joker");
-        bookEo.setPublishDate("1993-03-23");
+        bookEo.setPublishTime(1993);
 
         bookMapper.saveOne(bookEo);
 
@@ -78,7 +78,7 @@ public class BookMapperTest {
         bookEo.setIsbn("9787011234662");
         bookEo.setBookName("Bleak House");
         bookEo.setAuthor("Toms");
-        bookEo.setPublishDate("1924-01-01");
+        bookEo.setPublishTime(1993);
 
         BookDto bookDto = new BookDto();
         BeanUtils.copyProperties(bookEo,bookDto);

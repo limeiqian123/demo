@@ -20,7 +20,7 @@ public class BookController {
 
     @PostMapping("/add")
     @ResponseBody
-    public Response add(BookDto bookDto) {
+    public Response add(@RequestBody BookDto bookDto) {
         Response response = new Response();
         Optional<BookDto> result = bookService.add(bookDto);
         response.setData(result.get());
@@ -47,9 +47,9 @@ public class BookController {
 
     @DeleteMapping("/delete")
     @ResponseBody
-    public Response list(Integer id) {
+    public Response delete(@RequestBody BookDto bookDto) {
         Response response = new Response();
-        Integer count = bookService.delete(id);
+        Integer count = bookService.delete(bookDto.getId());
         HashMap<String, Integer> map = new HashMap<>();
         map.put("count", count);
         response.setData(map);
@@ -58,7 +58,7 @@ public class BookController {
 
     @PutMapping("/update")
     @ResponseBody
-    public Response update(BookDto bookDto) {
+    public Response update(@RequestBody BookDto bookDto) {
         Response response = new Response();
         Optional<BookDto> update = bookService.update(bookDto);
         response.setData(update.get());

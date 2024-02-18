@@ -13,6 +13,6 @@ public class BookDto {
 
     private String author;
 
-    private String publishDate;
+    private Integer publishTime;
 
 }

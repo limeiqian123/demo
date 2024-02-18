@@ -5,15 +5,15 @@
 
 <mapper namespace="com.example.demo.mapper.BookMapper">
     <insert id="saveOne" parameterType="com.example.demo.eo.BookEo" useGeneratedKeys="true" keyProperty="id">
-        insert into books(`isbn`,`book_name`,`author`,`publish_date`) values(#{isbn},#{bookName},#{author},#{publishDate});
+        insert into books(`isbn`,`book_name`,`author`,`publish_time`) values(#{isbn},#{bookName},#{author},#{publishTime});
     </insert>
 
     <select id="queryById" parameterType="Integer" resultType="com.example.demo.eo.BookEo">
-        select `id`, `isbn`,`book_name` bookName,`author`,`publish_date` publishDate from books where id = #{id}
+        select `id`, `isbn`,`book_name`,`author`,`publish_time` from books where id = #{id}
     </select>
 
     <select id="listAll" resultType="com.example.demo.eo.BookEo">
-        select `id`, `isbn`,`book_name` bookName,`author`,`publish_date` publishDate from books
+        select `id`, `isbn`,`book_name` bookName,`author`,`publish_time` from books
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer" >
@@ -32,8 +32,8 @@
             <if test="author != null and author != ''">
               `author` = #{author},
             </if>
-            <if test="publishDate != null">
-              `publish_date` = #{publishDate},
+            <if test="publishTime != null">
+              `publish_time` = #{publishTime},
             </if>
 
         </set>

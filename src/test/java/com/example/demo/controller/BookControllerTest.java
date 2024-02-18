@@ -39,18 +39,16 @@ public class BookControllerTest {
         bookDto.setIsbn("9787011234682");
         bookDto.setBookName("Mr. Bean");
         bookDto.setAuthor("Mr. L");
-        bookDto.setPublishDate("1888-11-01");
+        bookDto.setPublishTime(1988);
         Optional<BookDto> mockBookDto = Optional.of(bookDto);
 
         Mockito.when(bookService.add(Mockito.any(BookDto.class))).thenReturn(mockBookDto);
 
-
+        String params = "{\"isbn\":\"9784676855123\",\"bookName\":\"Mr. Book\",\"author\":\"Jake\",\"publishTime\":\"2012\"}";
         MvcResult mvcResult = mockMvc.perform(post("/book/add")
-                        .param("id", "1")
-                        .param("isbn", "9787011234682")
-                        .param("bookName", "Mr. Bean")
-                        .param("author", "Mr. L")
-                        .param("publishDate", "1888-11-01")
+                        .content(params)
+                        .contentType(MediaType.APPLICATION_JSON)
+
                 ).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.bookName").value("Mr. Bean"))
@@ -65,7 +63,7 @@ public class BookControllerTest {
         bookDto.setIsbn("9787011234682");
         bookDto.setBookName("Mr. Bean");
         bookDto.setAuthor("Mr. L");
-        bookDto.setPublishDate("1888-11-01");
+        bookDto.setPublishTime(1988);
         Optional<BookDto> mockBookDto = Optional.of(bookDto);
 
         Mockito.when(bookService.query(1)).thenReturn(mockBookDto);
@@ -85,7 +83,7 @@ public class BookControllerTest {
         bookDto.setIsbn("9787011234682");
         bookDto.setBookName("Mr. Bean");
         bookDto.setAuthor("Mr. L");
-        bookDto.setPublishDate("1888-11-01");
+        bookDto.setPublishTime(1888);
 
         List<BookDto> bookDtos = new ArrayList<>();
         bookDtos.add(bookDto);
@@ -105,9 +103,10 @@ public class BookControllerTest {
     @Test
     public void testBookDelete() throws Exception {
         Mockito.when(bookService.delete(Mockito.anyInt())).thenReturn(1);
+        String params = "{\"id\":1}";
         mockMvc.perform(delete("/book/delete")
-                        .param("id", "1")
-                        .accept(MediaType.APPLICATION_JSON))
+                        .content(params)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"));
@@ -128,11 +127,10 @@ public class BookControllerTest {
 
         Mockito.when(bookService.update(bookDto)).thenReturn(res);
 
+        String params = "{\"id\":1,\"bookName\":\"Mrs. Bean\",\"author\":\"Mrs. B\"}";
         mockMvc.perform(put("/book/update")
-                        .param("id", "1")
-                        .param("bookName", "Mrs. Bean")
-                        .param("author","Mrs. B")
-                        .accept(MediaType.APPLICATION_JSON))
+                        .content(params)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("0"))

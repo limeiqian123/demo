@@ -13,5 +13,5 @@ public class BookEo {
 
     private String author;
 
-    private String publishDate;
+    private Integer publishTime;
 }

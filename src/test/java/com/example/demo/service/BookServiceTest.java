@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.cglib.beans.BeanMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class BookServiceTest {
         bookReturn.setIsbn("9787011334567");
         bookReturn.setBookName("Mr. Bean");
         bookReturn.setAuthor("Mr. White");
-        bookReturn.setPublishDate("1922-01-22");
+        bookReturn.setPublishTime(1922);
 
         Mockito.when(bookMapper.saveOne(Mockito.any(BookEo.class))).thenReturn(1);
 
@@ -42,7 +41,7 @@ public class BookServiceTest {
         bookInput.setIsbn("9787011334567");
         bookInput.setBookName("Mr. Bean");
         bookInput.setAuthor("Mr. White");
-        bookInput.setPublishDate("1922-01-22");
+        bookInput.setPublishTime(1922);
 
         Optional<BookDto> result = bookService.add(bookInput);
 
@@ -56,7 +55,7 @@ public class BookServiceTest {
         bookReturn.setIsbn("9787011334567");
         bookReturn.setBookName("Mr. Bean");
         bookReturn.setAuthor("Mr. White");
-        bookReturn.setPublishDate("1922-01-22");
+        bookReturn.setPublishTime(1922);
 
         Mockito.when(bookMapper.queryById(Mockito.anyInt())).thenReturn(bookReturn);
 
@@ -71,7 +70,7 @@ public class BookServiceTest {
         bookReturn.setIsbn("9787011334567");
         bookReturn.setBookName("Mr. Bean");
         bookReturn.setAuthor("Mr. White");
-        bookReturn.setPublishDate("1922-01-22");
+        bookReturn.setPublishTime(1922);
 
         List<BookEo> bookEoList = new ArrayList<>();
         bookEoList.add(bookReturn);
@@ -100,7 +99,7 @@ public class BookServiceTest {
         bookReturn.setIsbn("9787011334567");
         bookReturn.setBookName("Mr. Bean");
         bookReturn.setAuthor("Mr. White");
-        bookReturn.setPublishDate("1922-01-22");
+        bookReturn.setPublishTime(1922);
 
 
         Mockito.when(bookMapper.update(bookDto)).thenReturn(1);
@@ -112,7 +111,7 @@ public class BookServiceTest {
         assertEquals(updatedBookDto.getId(),1);
         assertEquals(updatedBookDto.getBookName(), "Mrs. J");
         assertEquals(updatedBookDto.getAuthor(),"Mrs. B");
-        assertEquals(updatedBookDto.getPublishDate(), "1922-01-22");
+        assertEquals(updatedBookDto.getPublishTime(), 1922);
     }
 
 }
